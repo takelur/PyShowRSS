@@ -19,7 +19,7 @@ def getFeedURLs():
         with open('feeds.txt', 'r') as f:
             t_feeds = f.readlines()
     except IOError:
-        print('Error: feeds.txt not found')
+        print('Feil: feeds.txt ikke funnet')
         exit()
     for URL in t_feeds:
         feeds.append(URL.strip("\n"))
@@ -50,13 +50,13 @@ def getwebhookURLs():
         with open('webhooks.txt', 'r') as f:
             t_webHooks = f.readlines()
     except IOError:
-        print('Error: webhooks.txt not found')
+        print('Feil: webhooks.txt ikke funnet')
         exit()
     for webhook in t_webHooks:
         webHooks.append(webhook.strip("\n"))
     return webHooks
 
-# Works for Discord webhooks
+# Funker på Discord
 def webHookAlert(new_episodes, webHooks):
     for webhook in webHooks:
         for episode in new_episodes:
@@ -66,7 +66,6 @@ def webHookAlert(new_episodes, webHooks):
 
 
 if __name__ == '__main__':
-    # On initial run
     if initialFlag:
         feedURLs = getFeedURLs()
         episodes = parseFeeds(feedURLs)
@@ -81,6 +80,6 @@ if __name__ == '__main__':
         if new_episodes:
             webHookAlert(new_episodes, webHooks)
             old_episodes = episodes[:]
-        print("Checked for new episodes at " + time.strftime("%H:%M:%S"))
+        print("Sjekka etter nye episoder kl: " + time.strftime("%H:%M:%S"))
         time.sleep(21600)
         
