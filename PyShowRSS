@@ -1,0 +1,18 @@
+#!/sbin/openrc-run
+
+# Metadata
+description="PyShowRSS script"
+command="/usr/bin/env python3"
+command_args="/home/bots/PyShowRSS/main.py"
+command_background="yes"
+pidfile=/var/run/PyShowRSS.pid"
+
+
+start_pre() {
+        checkpath -f -m 0644 -o root:root "$pidfile"
+}
+
+depend() {
+        need net localmount
+        after firewall
+}
