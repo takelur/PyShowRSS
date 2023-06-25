@@ -1,7 +1,7 @@
 import feedparser
 import time
 import requests
-
+import signal
 
 # Checks if the script is in the initial run
 initialFlag = True
@@ -64,6 +64,16 @@ def webHookAlert(new_episodes, webHooks):
             data = {"content": "Ny episode: " + episode}
             requests.post(webhook, json=data)
 
+# Termination print
+def termination_handler(signal, frame):
+    for webhook in webHooks:
+        data = {"content": "Scriptet er avsluttet"}
+        requests.post(webhook, json=data)
+        print("Scriptet er avsluttet")
+
+# Register the termination handler function
+signal.signal(signal.SIGINT, termination_handler)
+signal.signal(signal.SIGTERM, termination_handler)
 
 if __name__ == '__main__':
     if initialFlag:
@@ -73,6 +83,10 @@ if __name__ == '__main__':
         webHookAlert(episodes, webHooks)
         old_episodes = episodes[:]
         initialFlag = False
+        data = {"content": "Scriptet er startet"}
+        for webhook in webHooks:
+            requests.post(webhook, json=data)
+        print("Scriptet er startet")
 
     while True:
         episodes = parseFeeds(feedURLs)
