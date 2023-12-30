@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  pyshowrss:
+    container_name: pyshowrss
+    image: ghcr.io/takelur/pyshowrss:latest
+    environment:
+      TZ: 'Europe/Oslo'
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config
