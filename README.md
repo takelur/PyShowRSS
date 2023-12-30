@@ -1,6 +1,10 @@
 # PyShowRSS
 
-# Usage
-Install python modules feedparser and requests
+## Usage
 
-Add your RSS feed on seperate lines in the feeds.txt file and add the Discord webhook URLs in the webhooks.txt file.
+Clone repository and add RSS feeds to `config/feeds.txt`. Made to work with https://showrss.info/. Then add your discord webhook URL(s) to `config/webhooks.txt`. They are separated by newline so add them on separate lines.
+
+Then start the app with:
+```bash
+docker compose up -d
+ ```
